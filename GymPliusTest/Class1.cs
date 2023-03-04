@@ -103,6 +103,17 @@ namespace ImdbTest
             IWebElement inputReEnterPassword = driver.FindElement(By.XPath("//*[@id='ap_password_check']"));
             inputReEnterPassword.SendKeys(password);
 
+            IWebElement ClickCreateYourIMDBAccountButton = driver.FindElement(By.XPath("//*[@id='continue']"));
+            ClickCreateYourIMDBAccountButton.Click();
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
+            By solvePuzzleButtonLocator = By.XPath("//*[@id='home_children_button']");
+            IWebElement ClickSolvePuzzleButton = wait.Until(ExpectedConditions.ElementIsVisible(solvePuzzleButtonLocator));
+            ClickSolvePuzzleButton.Click();
+            
+
+            IWebElement ClickOnPicture4 = driver.FindElement(By.XPath("//*[@id='image4']/a"));
+            ClickOnPicture4.Click();
 
 
 
