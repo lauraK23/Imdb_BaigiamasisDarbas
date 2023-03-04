@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
+using System.Drawing;
 
 namespace ImdbTest
 {
@@ -79,7 +80,7 @@ namespace ImdbTest
             Assert.AreEqual(expectedResult, actualResult);
         }
         [Test]
-        public static void CreatingAccount()
+        public static void EnteringValindInformationInCreatingAccountGetsYouToNextStep()
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
@@ -106,21 +107,45 @@ namespace ImdbTest
             IWebElement ClickCreateYourIMDBAccountButton = driver.FindElement(By.XPath("//*[@id='continue']"));
             ClickCreateYourIMDBAccountButton.Click();
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
-            By solvePuzzleButtonLocator = By.XPath("//*[@id='home_children_button']");
-            IWebElement ClickSolvePuzzleButton = wait.Until(ExpectedConditions.ElementIsVisible(solvePuzzleButtonLocator));
-            ClickSolvePuzzleButton.Click();
+            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
+            //By solvePuzzleButtonLocator = By.XPath("//*[@id='home_children_button']");
+            //IWebElement ClickSolvePuzzleButton = wait.Until(ExpectedConditions.ElementIsVisible(solvePuzzleButtonLocator));
+            //ClickSolvePuzzleButton.Click();
             
 
-            IWebElement ClickOnPicture4 = driver.FindElement(By.XPath("//*[@id='image4']/a"));
-            ClickOnPicture4.Click();
-
-
-
-
-
+            //IWebElement ClickOnPicture4 = driver.FindElement(By.XPath("//*[@id='image4']/a"));
+            //ClickOnPicture4.Click();
         }
 
+        [Test]
+        public static void SearchBarIsFunctioning()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+
+            //IWebElement ClickSearchIMDBBar = driver.FindElement(By.XPath("//*[@id='suggestion-search']"));
+            //ClickSearchIMDBBar.Click();
+
+            string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstelar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
+            Random random = new Random();
+            // get a random index from the array
+            int randomIndex = random.Next(0, words.Length);
+            // get the word at the random index
+            string randomWord = words[randomIndex];
+
+            IWebElement inputRandomWord = driver.FindElement(By.XPath("//*[@id='suggestion-search']"));
+            inputRandomWord.SendKeys(randomWord);
+
+            IWebElement ClickSearch = driver.FindElement(By.XPath("//*[@id='iconContext-magnify']"));
+            ClickSearch.Click();
+
+            string expectedResult = ($"Search {randomWord}");
+
+            IWebElement searchAnswer = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[1]/h1"));
+            string actualResult = searchAnswer.Text;
+            Assert.AreEqual(expectedResult, actualResult);
+
+        }
         //[TearDown]
         //public static void Quit()
         //{
