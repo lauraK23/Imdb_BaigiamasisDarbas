@@ -22,8 +22,6 @@ namespace ImdbTest
 
         public static void BornToday()
         {
-            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            //driver.ExecuteJavaScript("window.scrollBy(0, 200)");
 
            // IWebElement ClosePopUp = driver.FindElement(By.XPath("//*[@id=\"iconContext-clear\"]/path[2]"));
            // ClosePopUp.Click();
@@ -38,9 +36,6 @@ namespace ImdbTest
             //wait.Until(driver => driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span")).Text=="Celebs"));
             driver.ExecuteJavaScript("window.scrollBy(0, 500)");
 
-            //IWebElement ClickCelebs = driver.FindElement(By.XPath("//*[@id=\"imdbHeader\"]/div[2]/aside/div/div[2]/div/div[5]/span/label/span[2]"));
-            //ClickCelebs.Click();
-
             IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]/span"));
             driver.ExecuteJavaScript("window.scrollBy(0, 500)");
             ClickBornToday.Click();
@@ -53,6 +48,25 @@ namespace ImdbTest
             Assert.AreEqual(expectedResult, actualResult);
 
             driver.Quit();
+        }
+
+        [Test]
+        public static void ImdbTop250Movies()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+
+            IWebElement ClickBurgerMenu = driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span"));
+            ClickBurgerMenu.Click();
+
+            IWebElement ClickTop250Movies = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[1]/span/div/div/ul/a[1]/span"));
+            ClickTop250Movies.Click();
+
+            IWebElement ClickRankingDropDown = driver.FindElement(By.XPath("//*[@id='lister-sort-by-options']"));
+            ClickRankingDropDown.Click();
+
+
+
         }
         //[TearDown]
         //public static void Quit()
