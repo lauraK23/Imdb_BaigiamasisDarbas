@@ -76,7 +76,7 @@ namespace ImdbTest
 
         }
         [Test]
-        public static void EnteringValindInformationInCreatingAccountGetsYouToNextStep()
+        public static void EnteringValidInformationInCreatingAccountFieldGetsYouToNextStep()
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
