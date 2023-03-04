@@ -66,7 +66,6 @@ namespace ImdbTest
             IWebElement ClickRankingDropDown = driver.FindElement(By.XPath("//*[@id='lister-sort-by-options']"));
             ClickRankingDropDown.Click();
 
-            // Define an explicit wait to wait until the "Release Date" button is visible
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             By releaseDateButtonLocator = By.XPath("//*[@id='lister-sort-by-options']/option[4]");
             IWebElement ClickByReleaseDate = wait.Until(ExpectedConditions.ElementIsVisible(releaseDateButtonLocator));
@@ -78,8 +77,39 @@ namespace ImdbTest
 
             string actualResult = firstMovieAfterClickingSortByReleaseDate.Text;
             Assert.AreEqual(expectedResult, actualResult);
+        }
+        [Test]
+        public static void CreatingAccount()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+
+            IWebElement ClickSignIn = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/div[5]/a/span"));
+            ClickSignIn.Click();
+
+            IWebElement ClickCreateANewAccount = driver.FindElement(By.XPath("//*[@id='signin-options']/div/div[2]/a"));
+            ClickCreateANewAccount.Click();
+
+            string yourName = "Test";
+            string email = "123@mailslurp.com";
+            string password = "password";
+
+            IWebElement inputYourName = driver.FindElement(By.XPath("//*[@id='ap_customer_name']"));
+            inputYourName.SendKeys(yourName);
+            IWebElement inputEmail = driver.FindElement(By.XPath("//*[@id='ap_email']"));
+            inputEmail.SendKeys(email);
+            IWebElement inputPassword = driver.FindElement(By.XPath("//*[@id='ap_password']"));
+            inputPassword.SendKeys(password);
+            IWebElement inputReEnterPassword = driver.FindElement(By.XPath("//*[@id='ap_password_check']"));
+            inputReEnterPassword.SendKeys(password);
+
+
+
+
+
 
         }
+
         //[TearDown]
         //public static void Quit()
         //{
