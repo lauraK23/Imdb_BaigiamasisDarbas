@@ -13,7 +13,7 @@ namespace ImdbTest
         public static IWebDriver driver;
 
         //[SetUp]
-        //public static void SetUp()
+        //public void SetUp()
         //{
         //    IWebDriver driver = new ChromeDriver();
         //    driver.Url = "https://www.imdb.com/?ref_=nv_home";
@@ -23,18 +23,12 @@ namespace ImdbTest
 
         public static void BornToday()
         {
-
-           // IWebElement ClosePopUp = driver.FindElement(By.XPath("//*[@id=\"iconContext-clear\"]/path[2]"));
-           // ClosePopUp.Click();
-
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
 
             IWebElement ClickBurgerMenu = driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span"));
             ClickBurgerMenu.Click();
 
-            //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            //wait.Until(driver => driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span")).Text=="Celebs"));
             driver.ExecuteJavaScript("window.scrollBy(0, 500)");
 
             IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]/span"));
@@ -77,6 +71,9 @@ namespace ImdbTest
 
             string actualResult = firstMovieAfterClickingSortByReleaseDate.Text;
             Assert.AreEqual(expectedResult, actualResult);
+
+            driver.Quit();
+
         }
         [Test]
         public static void EnteringValindInformationInCreatingAccountGetsYouToNextStep()
@@ -110,10 +107,12 @@ namespace ImdbTest
             //By solvePuzzleButtonLocator = By.XPath("//*[@id='home_children_button']");
             //IWebElement ClickSolvePuzzleButton = wait.Until(ExpectedConditions.ElementIsVisible(solvePuzzleButtonLocator));
             //ClickSolvePuzzleButton.Click();
-            
+
 
             //IWebElement ClickOnPicture4 = driver.FindElement(By.XPath("//*[@id='image4']/a"));
             //ClickOnPicture4.Click();
+            driver.Quit();
+
         }
 
         [Test]
@@ -140,6 +139,7 @@ namespace ImdbTest
             IWebElement searchAnswer = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[1]/h1"));
             string actualResult = searchAnswer.Text;
             Assert.AreEqual(expectedResult, actualResult);
+            driver.Quit();
 
         }
         [Test]
@@ -177,6 +177,8 @@ namespace ImdbTest
             IWebElement movieQuotes = driver.FindElement(By.XPath("//*[@id='main']/section/div[1]/div/h1"));
             string actualResult = movieQuotes.Text;
             Assert.AreEqual(expectedResult, actualResult);
+            driver.Quit();
+
         }
 
         [Test]
@@ -197,8 +199,7 @@ namespace ImdbTest
             By YourRatingLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
             IWebElement ClickRateButton = wait.Until(ExpectedConditions.ElementIsVisible(YourRatingLocator));
             ClickRateButton.Click();
-            // IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[7]"));
-            // ClickRatingStar.Click();
+
             for ( var i=1; i<11; i++)
             {
                 IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[1]"));
@@ -206,6 +207,7 @@ namespace ImdbTest
                 IWebElement ClickRate = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/button/span"));
                 ClickRate.Click();
             }
+            driver.Quit();
 
         }
         //[TearDown]
