@@ -3,6 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 
 namespace ImdbTest
@@ -65,7 +66,18 @@ namespace ImdbTest
             IWebElement ClickRankingDropDown = driver.FindElement(By.XPath("//*[@id='lister-sort-by-options']"));
             ClickRankingDropDown.Click();
 
+            // Define an explicit wait to wait until the "Release Date" button is visible
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            By releaseDateButtonLocator = By.XPath("//*[@id='lister-sort-by-options']/option[4]");
+            IWebElement ClickByReleaseDate = wait.Until(ExpectedConditions.ElementIsVisible(releaseDateButtonLocator));
+            ClickByReleaseDate.Click();
 
+            string expectedResult = "109. Top Gun: Maverick (2022)";
+
+            IWebElement firstMovieAfterClickingSortByReleaseDate = driver.FindElement(By.XPath("//*[@id='main']/div/span/div/div/div[3]/table/tbody/tr[1]/td[2]"));
+
+            string actualResult = firstMovieAfterClickingSortByReleaseDate.Text;
+            Assert.AreEqual(expectedResult, actualResult);
 
         }
         //[TearDown]
