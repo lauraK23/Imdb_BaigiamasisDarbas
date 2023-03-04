@@ -36,7 +36,7 @@ namespace ImdbTest
 
             //WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             //wait.Until(driver => driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span")).Text=="Celebs"));
-            //driver.ExecuteJavaScript("window.scrollBy(0, 500)");
+            driver.ExecuteJavaScript("window.scrollBy(0, 500)");
 
             //IWebElement ClickCelebs = driver.FindElement(By.XPath("//*[@id=\"imdbHeader\"]/div[2]/aside/div/div[2]/div/div[5]/span/label/span[2]"));
             //ClickCelebs.Click();
@@ -45,7 +45,9 @@ namespace ImdbTest
             driver.ExecuteJavaScript("window.scrollBy(0, 500)");
             ClickBornToday.Click();
 
-            string expectedResult = ($"Birth Month Day of {DateTime.Now} (Sorted by Popularity Ascending)");
+            DateTime aDate = DateTime.Now;
+
+            string expectedResult = ($"Birth Month Day of {aDate.ToString("MM-dd")} (Sorted by Popularity Ascending)");
             IWebElement bornTodayPageHeader = driver.FindElement(By.XPath("//*[@id='main']/div/h1"));
             string actualResult = bornTodayPageHeader.Text;
             Assert.AreEqual(expectedResult, actualResult);
