@@ -178,6 +178,36 @@ namespace ImdbTest
             string actualResult = movieQuotes.Text;
             Assert.AreEqual(expectedResult, actualResult);
         }
+
+        [Test]
+        public void RatingAMovieWithoutLoggingInIsNotPossible()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+
+            string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
+            Random random = new Random();
+            int randomIndex = random.Next(0, words.Length);
+            string randomWord = words[randomIndex];
+            IWebElement inputRandomWord = driver.FindElement(By.XPath("//*[@id='suggestion-search']"));
+            inputRandomWord.SendKeys(randomWord);
+            IWebElement ClickSearch = driver.FindElement(By.XPath("//*[@id='iconContext-magnify']"));
+            ClickSearch.Click();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
+            By YourRatingLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
+            IWebElement ClickRateButton = wait.Until(ExpectedConditions.ElementIsVisible(YourRatingLocator));
+            ClickRateButton.Click();
+            // IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[7]"));
+            // ClickRatingStar.Click();
+            for ( var i=1; i<11; i++)
+            {
+                IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[1]"));
+                ClickRatingStar.Click();
+                IWebElement ClickRate = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/button/span"));
+                ClickRate.Click();
+            }
+
+        }
         //[TearDown]
         //public static void Quit()
         //{
