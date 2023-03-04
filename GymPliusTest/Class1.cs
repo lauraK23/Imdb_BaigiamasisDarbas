@@ -5,7 +5,6 @@ using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
-using System.Drawing;
 
 namespace ImdbTest
 {
@@ -123,9 +122,6 @@ namespace ImdbTest
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
 
-            //IWebElement ClickSearchIMDBBar = driver.FindElement(By.XPath("//*[@id='suggestion-search']"));
-            //ClickSearchIMDBBar.Click();
-
             string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstelar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
             Random random = new Random();
             // get a random index from the array
@@ -145,6 +141,42 @@ namespace ImdbTest
             string actualResult = searchAnswer.Text;
             Assert.AreEqual(expectedResult, actualResult);
 
+        }
+        [Test]
+        public void LinkActivityGetToQuotes()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+
+            string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
+            Random random = new Random();
+            int randomIndex = random.Next(0, words.Length);
+            string randomWord = words[randomIndex];
+            IWebElement inputRandomWord = driver.FindElement(By.XPath("//*[@id='suggestion-search']"));
+            inputRandomWord.SendKeys(randomWord);
+            IWebElement ClickSearch = driver.FindElement(By.XPath("//*[@id='iconContext-magnify']"));
+            ClickSearch.Click();
+
+            IWebElement ClickFirstLink = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[2]/div[2]/ul/li[1]/div[2]/div/a"));
+            ClickFirstLink.Click();
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
+            By TriviaButtonLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[1]/div/div[2]/ul/li[3]/a");
+            IWebElement ClickTriviaButton = wait.Until(ExpectedConditions.ElementIsVisible(TriviaButtonLocator));
+            ClickTriviaButton.Click();
+
+            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
+            By PopUpRateThisMovieLocator = By.XPath("//*[@id='iconContext-clear']");
+            IWebElement ClickClosePopUpRateThisMovie = wait.Until(ExpectedConditions.ElementIsVisible(PopUpRateThisMovieLocator));
+            ClickClosePopUpRateThisMovie.Click();
+
+            IWebElement ClickQuotesButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[2]/div[2]/ul/li[1]/div[2]/div/a"));
+            ClickQuotesButton.Click();
+
+            string expectedResult = "Quotes";
+            IWebElement movieQuotes = driver.FindElement(By.XPath("//*[@id='main']/section/div[1]/div/h1"));
+            string actualResult = movieQuotes.Text;
+            Assert.AreEqual(expectedResult, actualResult);
         }
         //[TearDown]
         //public static void Quit()
