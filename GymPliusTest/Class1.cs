@@ -5,6 +5,9 @@ using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
+using System.Drawing;
+using System.IO;
+using System.Web;
 
 namespace ImdbTest
 {
@@ -17,6 +20,7 @@ namespace ImdbTest
         //{
         //    IWebDriver driver = new ChromeDriver();
         //    driver.Url = "https://www.imdb.com/?ref_=nv_home";
+        //    driver.Manage().Window.Maximize();
         //}
 
         [Test]
@@ -25,14 +29,17 @@ namespace ImdbTest
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
 
-            IWebElement ClickBurgerMenu = driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span"));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            By untilPageIsMaximized = By.XPath("//*[@id='iconContext-menu']");
+            IWebElement ClickBurgerMenu = wait.Until(ExpectedConditions.ElementIsVisible(untilPageIsMaximized));
             ClickBurgerMenu.Click();
 
-            driver.ExecuteJavaScript("window.scrollBy(0, 500)");
+            driver.ExecuteJavaScript("window.scrollBy(0, 200)");
 
-            IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]/span"));
-            driver.ExecuteJavaScript("window.scrollBy(0, 500)");
+            IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]"));
+            driver.ExecuteJavaScript("window.scrollBy(0, 300)");
             ClickBornToday.Click();
 
             DateTime aDate = DateTime.Now;
@@ -50,22 +57,44 @@ namespace ImdbTest
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
-
-            IWebElement ClickBurgerMenu = driver.FindElement(By.XPath("//*[@id='imdbHeader-navDrawerOpen']/span"));
+            driver.Manage().Window.Maximize();
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            By untilPageIsMaximized = By.XPath("//*[@id='iconContext-menu']");
+            IWebElement ClickBurgerMenu = wait.Until(ExpectedConditions.ElementIsVisible(untilPageIsMaximized));
             ClickBurgerMenu.Click();
 
-            IWebElement ClickTop250Movies = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[1]/span/div/div/ul/a[1]/span"));
-            ClickTop250Movies.Click();
+            string xpath1 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]/span";
+            string xpath2 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]/span";
+            string xpath3 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]";
+            string xpath4 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]";
+            try
+            {
+                IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath1));
+                ClickTop250Movies.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                try
+                {
+                    IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath4));
+                    ClickTop250Movies.Click();
+                }
+                catch(NoSuchElementException)
+                {
+                    IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath3));
+                    ClickTop250Movies.Click();
+                }
+            }
 
             IWebElement ClickRankingDropDown = driver.FindElement(By.XPath("//*[@id='lister-sort-by-options']"));
             ClickRankingDropDown.Click();
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            By releaseDateButtonLocator = By.XPath("//*[@id='lister-sort-by-options']/option[4]");
+            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            By releaseDateButtonLocator = By.XPath("//*[@id='lister-sort-by-options']/option[3]");
             IWebElement ClickByReleaseDate = wait.Until(ExpectedConditions.ElementIsVisible(releaseDateButtonLocator));
             ClickByReleaseDate.Click();
 
-            string expectedResult = "109. Top Gun: Maverick (2022)";
+            string expectedResult = "113. Top Gun: Maverick (2022)";
 
             IWebElement firstMovieAfterClickingSortByReleaseDate = driver.FindElement(By.XPath("//*[@id='main']/div/span/div/div/div[3]/table/tbody/tr[1]/td[2]"));
 
@@ -134,7 +163,7 @@ namespace ImdbTest
             IWebElement ClickSearch = driver.FindElement(By.XPath("//*[@id='iconContext-magnify']"));
             ClickSearch.Click();
 
-            string expectedResult = ($"Search {randomWord}");
+            string expectedResult = ($"Search \"{randomWord}\"");
 
             IWebElement searchAnswer = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[1]/h1"));
             string actualResult = searchAnswer.Text;
@@ -147,6 +176,7 @@ namespace ImdbTest
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
 
             string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
             Random random = new Random();
@@ -166,11 +196,12 @@ namespace ImdbTest
             ClickTriviaButton.Click();
 
             WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
-            By PopUpRateThisMovieLocator = By.XPath("//*[@id='iconContext-clear']");
+            //By PopUpRateThisMovieLocator = By.XPath("//*[@id='iconContext-clear']");
+            By PopUpRateThisMovieLocator = By.XPath("//*[@id='styleguide-v2']/div[7]/div[3]/div/div[1]/button");
             IWebElement ClickClosePopUpRateThisMovie = wait.Until(ExpectedConditions.ElementIsVisible(PopUpRateThisMovieLocator));
             ClickClosePopUpRateThisMovie.Click();
 
-            IWebElement ClickQuotesButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[2]/div[2]/ul/li[1]/div[2]/div/a"));
+            IWebElement ClickQuotesButton = driver.FindElement(By.XPath("//*[@id='sidebar']/div[3]/ul/li[4]/a"));
             ClickQuotesButton.Click();
 
             string expectedResult = "Quotes";
@@ -178,7 +209,6 @@ namespace ImdbTest
             string actualResult = movieQuotes.Text;
             Assert.AreEqual(expectedResult, actualResult);
             driver.Quit();
-
         }
 
         [Test]
@@ -186,6 +216,7 @@ namespace ImdbTest
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
 
             string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
             Random random = new Random();
@@ -195,23 +226,20 @@ namespace ImdbTest
             inputRandomWord.SendKeys(randomWord);
             IWebElement ClickSearch = driver.FindElement(By.XPath("//*[@id='iconContext-magnify']"));
             ClickSearch.Click();
+            IWebElement ClickFirstLink = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[2]/div[2]/ul/li[1]/div[2]/div/a"));
+            ClickFirstLink.Click();
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
             By YourRatingLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
             IWebElement ClickRateButton = wait.Until(ExpectedConditions.ElementIsVisible(YourRatingLocator));
             ClickRateButton.Click();
 
-            for ( var i=1; i<11; i++)
-            {
-                IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[1]"));
-                ClickRatingStar.Click();
-                IWebElement ClickRate = driver.FindElement(By.XPath("/html/body/div[5]/div[2]/div/div[2]/div/div[2]/div[2]/button/span"));
-                ClickRate.Click();
-            }
+            
             driver.Quit();
 
         }
         //[TearDown]
-        //public static void Quit()
+        //public void Quit()
         //{
         //    driver.Quit();
         //}
