@@ -260,17 +260,32 @@ namespace ImdbTest
             RatingStars.Click();
 
 
-            // Get all the star elements
-            IList<IWebElement> StarElements = RatingStars.FindElements(By.TagName("button"));
+            //IList<IWebElement> StarElements = RatingStars.FindElements(By.TagName("button"));
 
-            // Click on each star element one by one
-            foreach (IWebElement star in StarElements)
-            {
-                star.Click();
-                Thread.Sleep(1000); // Add a short delay to allow the rating to register
-            }
+            //foreach (IWebElement star in StarElements)
+            //{
+            //    star.Click();
+            //    Thread.Sleep(3000); 
+            //}
 
-            
+
+            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            By UntilPageIsLoaded = By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[5]");
+            IWebElement ClickStarButton = wait.Until(ExpectedConditions.ElementIsVisible(UntilPageIsLoaded));
+            ClickStarButton.Click();
+            //*[@id="iconContext-star"]
+            // html / body / div[4] / div[2] / div / div[2] / div / div[2] / div[2] / div / div[2] / button[5]
+
+            IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[1]"));
+            ClickRatingStar.Click();
+
+            //By RateButtonLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
+            //IWebElement untilRateButtonIsClicable = wait.Until(ExpectedConditions.ElementIsVisible(RateButtonLocator));
+            //untilRateButtonIsClicable.Click();
+
+            //IWebElement ClickRateButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div"));
+            //ClickRateButton.Click();
+
 
             driver.Quit();
 
