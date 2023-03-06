@@ -6,6 +6,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading;
 
 namespace ImdbTest
@@ -160,6 +161,9 @@ namespace ImdbTest
 
             //IWebElement ClickOnPicture4 = driver.FindElement(By.XPath("//*[@id='image4']/a"));
             //ClickOnPicture4.Click();
+            string expectedResult = ("Authentication required"); 
+            string actualResult = 
+            Assert
             driver.Quit();
 
         }
