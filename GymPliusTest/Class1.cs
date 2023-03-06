@@ -274,7 +274,6 @@ namespace ImdbTest
             IWebElement ClickStarButton = wait.Until(ExpectedConditions.ElementIsVisible(UntilPageIsLoaded));
             ClickStarButton.Click();
             //*[@id="iconContext-star"]
-            // html / body / div[4] / div[2] / div / div[2] / div / div[2] / div[2] / div / div[2] / button[5]
 
             IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[1]"));
             ClickRatingStar.Click();
