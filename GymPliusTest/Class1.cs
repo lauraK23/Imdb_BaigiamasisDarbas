@@ -5,9 +5,8 @@ using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
-using System.Drawing;
-using System.IO;
-using System.Web;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace ImdbTest
 {
@@ -38,9 +37,30 @@ namespace ImdbTest
 
             driver.ExecuteJavaScript("window.scrollBy(0, 200)");
 
-            IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]"));
+            string xpath1 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[4]/span/div/div/ul/a[1]/span";
+            string xpath2 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]/span";
+            string xpath3 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]";
+            try
+            {
+                IWebElement ClickBornToday = driver.FindElement(By.XPath(xpath1));
+                ClickBornToday.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                try
+                {
+                    IWebElement ClickBornToday = driver.FindElement(By.XPath(xpath2));
+                    ClickBornToday.Click();
+                }
+                catch (NoSuchElementException)
+                {
+                    IWebElement ClickBornToday = driver.FindElement(By.XPath(xpath3));
+                    ClickBornToday.Click();
+                }
+            }
+            //IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]"));
             driver.ExecuteJavaScript("window.scrollBy(0, 300)");
-            ClickBornToday.Click();
+            //ClickBornToday.Click();
 
             DateTime aDate = DateTime.Now;
 
@@ -64,7 +84,7 @@ namespace ImdbTest
             ClickBurgerMenu.Click();
 
             string xpath1 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]/span";
-            string xpath2 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]/span";
+            //string xpath2 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]/span";
             string xpath3 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]";
             string xpath4 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]";
             try
@@ -212,13 +232,13 @@ namespace ImdbTest
         }
 
         [Test]
-        public void RatingAMovieWithoutLoggingInIsNotPossible()
+        public static void RatingAMovieWithoutLoggingInIsNotPossible()
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
             driver.Manage().Window.Maximize();
 
-            string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
+            string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "8 mile", "anastasia", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
             string randomWord = words[randomIndex];
@@ -230,11 +250,28 @@ namespace ImdbTest
             ClickFirstLink.Click();
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
-            By YourRatingLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
-            IWebElement ClickRateButton = wait.Until(ExpectedConditions.ElementIsVisible(YourRatingLocator));
-            ClickRateButton.Click();
+            //By untilYourRatingIsClickable = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
+            //IWebElement ClickRateButton = wait.Until(ExpectedConditions.ElementIsVisible(untilYourRatingIsClickable));
+            //ClickRateButton.Click();
+
+            By RatingStarsLocator = By.XPath("//*[@id='iconContext-star-border']");
+            IWebElement RatingStars = wait.Until(ExpectedConditions.ElementIsVisible(RatingStarsLocator));
+            //*[@id="iconContext-star-border"]
+            RatingStars.Click();
+
+
+            // Get all the star elements
+            IList<IWebElement> StarElements = RatingStars.FindElements(By.TagName("button"));
+
+            // Click on each star element one by one
+            foreach (IWebElement star in StarElements)
+            {
+                star.Click();
+                Thread.Sleep(1000); // Add a short delay to allow the rating to register
+            }
 
             
+
             driver.Quit();
 
         }
@@ -243,7 +280,5 @@ namespace ImdbTest
         //{
         //    driver.Quit();
         //}
-
-
     }
 }
