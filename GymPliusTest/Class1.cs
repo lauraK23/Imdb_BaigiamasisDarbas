@@ -5,9 +5,6 @@ using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
 
 namespace ImdbTest
 {
@@ -20,7 +17,7 @@ namespace ImdbTest
         //{
         //    IWebDriver driver = new ChromeDriver();
         //    driver.Url = "https://www.imdb.com/?ref_=nv_home";
-        //    driver.Manage().Window.Maximize();
+        //    //driver.Manage().Window.Maximize();
         //}
 
         [Test]
@@ -70,7 +67,7 @@ namespace ImdbTest
             string actualResult = bornTodayPageHeader.Text;
             Assert.AreEqual(expectedResult, actualResult);
 
-            driver.Quit();
+            //driver.Quit();
         }
 
         [Test]
@@ -161,9 +158,8 @@ namespace ImdbTest
 
             //IWebElement ClickOnPicture4 = driver.FindElement(By.XPath("//*[@id='image4']/a"));
             //ClickOnPicture4.Click();
-            string expectedResult = ("Authentication required"); 
-            string actualResult = 
-            Assert
+            string expectedResult = ("Authentication required");
+            string actualResult = "";
             driver.Quit();
 
         }
@@ -289,10 +285,9 @@ namespace ImdbTest
             //IWebElement ClickRateButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div"));
             //ClickRateButton.Click();
 
-
             driver.Quit();
-
         }
+
         //[TearDown]
         //public void Quit()
         //{
