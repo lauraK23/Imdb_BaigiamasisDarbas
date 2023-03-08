@@ -169,7 +169,6 @@ namespace ImdbTest
             string actualResult = searchAnswer.Text;
             Assert.AreEqual(expectedResult, actualResult);
             driver.Quit();
-
         }
         [Test]
         public void LinkActivityGetToQuotes()
