@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
+using System.Xml.Linq;
 
 namespace ImdbTest
 {
@@ -154,7 +156,7 @@ namespace ImdbTest
             driver.Manage().Window.Maximize();
 
 
-            string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstelar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
+            string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstellar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
             string randomWord = words[randomIndex];
@@ -180,7 +182,7 @@ namespace ImdbTest
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
             driver.Manage().Window.Maximize();
 
-            string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
+            string[] words = { "inception", "eurotrip", "borat", "interstellar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
             string randomWord = words[randomIndex];
@@ -219,7 +221,7 @@ namespace ImdbTest
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
             driver.Manage().Window.Maximize();
 
-            string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "8 mile", "anastasia", "django unchained" };
+            string[] words = { "inception", "eurotrip", "borat", "interstellar", "the boys", "now you see me", "8 mile", "anastasia", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
             string randomWord = words[randomIndex];
@@ -250,20 +252,29 @@ namespace ImdbTest
             //}
 
 
-            WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            By UntilPageIsLoaded = By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[5]");
-            IWebElement ClickStarButton = wait.Until(ExpectedConditions.ElementIsVisible(UntilPageIsLoaded));
-            ClickStarButton.Click();
+            //WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            //By UntilPageIsLoaded = By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[5]");
+            //IWebElement ClickStarButton = wait.Until(ExpectedConditions.ElementIsVisible(UntilPageIsLoaded));
+            //ClickStarButton.Click();
 
-            IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[1]"));
-            ClickRatingStar.Click();
+            
+            // By UntilThisPageIsLoaded = By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[8]");
+            //  IWebElement ClickRatingStar = wait.Until(ExpectedConditions.ElementIsVisible(UntilThisPageIsLoaded));
+            IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[8]"));
+            Actions action = new Actions(driver);
+            action.DoubleClick(ClickRatingStar).Perform();
+            //ClickRatingStar.Click();
+            //body/div[6]/div[2]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]
+            // html / body / div[4] / div[2] / div / div[2] / div / div[2] / div[2] / div / div[2] / button[1]
 
             //By RateButtonLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
             //IWebElement untilRateButtonIsClicable = wait.Until(ExpectedConditions.ElementIsVisible(RateButtonLocator));
             //untilRateButtonIsClicable.Click();
+            // ClickRateButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div"));
 
-            IWebElement ClickRateButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div"));
+            IWebElement ClickRateButton = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/button/span"));
             ClickRateButton.Click();
+            // html / body / div[4] / div[2] / div / div[2] / div / div[2] / div[2] / button / span
 
             string expectedResult = "Sign in with IMDb - IMDb";
             string actualResult = driver.Title; 
