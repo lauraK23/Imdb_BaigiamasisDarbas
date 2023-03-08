@@ -6,7 +6,6 @@ using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using System;
-using System.Xml.Linq;
 
 namespace ImdbTest
 {
@@ -72,9 +71,8 @@ namespace ImdbTest
             ClickBurgerMenu.Click();
 
             string xpath1 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]/span";
-            //string xpath2 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]/span";
-            string xpath3 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]";
-            string xpath4 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]";
+            string xpath2 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/div[2]/span/div/div/ul/a[2]";
+            string xpath3 = "//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[1]/span/div/div/ul/a[2]";
             try
             {
                 IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath1));
@@ -84,12 +82,12 @@ namespace ImdbTest
             {
                 try
                 {
-                    IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath4));
+                    IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath3));
                     ClickTop250Movies.Click();
                 }
                 catch(NoSuchElementException)
                 {
-                    IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath3));
+                    IWebElement ClickTop250Movies = driver.FindElement(By.XPath(xpath2));
                     ClickTop250Movies.Click();
                 }
             }
@@ -117,7 +115,6 @@ namespace ImdbTest
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
             driver.Manage().Window.Maximize();
-
 
             IWebElement ClickSignIn = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/div[5]/a/span"));
             ClickSignIn.Click();
@@ -154,7 +151,6 @@ namespace ImdbTest
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
             driver.Manage().Window.Maximize();
-
 
             string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstellar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
             Random random = new Random();
