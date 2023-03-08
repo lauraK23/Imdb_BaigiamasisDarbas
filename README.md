@@ -52,6 +52,8 @@
 ###### 6.3. Enter valid movie title. 
 ###### 6.4. Press Magnifying glass logo to search.
 ###### 6.5. Press the first search given title. 
-###### 6.6. Find and press on "Your Rating" star shaped button. 
-###### 6.7. Check if rating a movie  (from 1 to 10) is not possible without logging in.
+###### 6.6. Find and press on "Your Rating" star shaped button.
+###### 6.7. Rate a movie by cliking on one of the stars. 
+###### 6.8. Click "Rate" button. 
+###### 6.9. Check if rating a movie  (from 1 to 10) is not possible without logging in.
 ###### Expected Result - After choosing a movie, it's not possible to rate it without being logged into your account. 
