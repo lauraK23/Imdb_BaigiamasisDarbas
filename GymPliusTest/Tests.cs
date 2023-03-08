@@ -8,20 +8,10 @@ using System;
 
 namespace ImdbTest
 {
-    public class Class1
+    public class Tests
     {
         public static IWebDriver driver;
-
-        [SetUp]
-        public void SetUp()
-        {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
-        }
-
         [Test]
-
         public static void BornToday()
         {
             IWebDriver driver = new ChromeDriver();
@@ -56,9 +46,6 @@ namespace ImdbTest
                     ClickBornToday.Click();
                 }
             }
-            //IWebElement ClickBornToday = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/aside/div/div[2]/div/div[5]/span/div/div/ul/a[1]"));
-           // driver.ExecuteJavaScript("window.scrollBy(0, 300)");
-            //ClickBornToday.Click();
 
             DateTime aDate = DateTime.Now;
 
@@ -76,6 +63,7 @@ namespace ImdbTest
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
             driver.Manage().Window.Maximize();
+
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             By untilPageIsMaximized = By.XPath("//*[@id='iconContext-menu']");
             IWebElement ClickBurgerMenu = wait.Until(ExpectedConditions.ElementIsVisible(untilPageIsMaximized));
@@ -120,13 +108,14 @@ namespace ImdbTest
             Assert.AreEqual(expectedResult, actualResult);
 
             driver.Quit();
-
         }
         [Test]
         public static void EnteringValidInformationInCreatingAccountFieldGetsYouToNextStep()
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
+
 
             IWebElement ClickSignIn = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/div[5]/a/span"));
             ClickSignIn.Click();
@@ -153,8 +142,8 @@ namespace ImdbTest
             string expectedResult = ("Authentication required");
             string actualResult = driver.Title;
             Assert.AreEqual(expectedResult, actualResult);
-            driver.Quit();
 
+            driver.Quit();
         }
 
         [Test]
@@ -162,6 +151,8 @@ namespace ImdbTest
         {
             IWebDriver driver = new ChromeDriver();
             driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
+
 
             string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstelar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
             Random random = new Random();
@@ -207,7 +198,6 @@ namespace ImdbTest
             ClickTriviaButton.Click();
 
             WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
-            //By PopUpRateThisMovieLocator = By.XPath("//*[@id='iconContext-clear']");
             By PopUpRateThisMovieLocator = By.XPath("//*[@id='styleguide-v2']/div[7]/div[3]/div/div[1]/button");
             IWebElement ClickClosePopUpRateThisMovie = wait.Until(ExpectedConditions.ElementIsVisible(PopUpRateThisMovieLocator));
             ClickClosePopUpRateThisMovie.Click();
@@ -225,9 +215,9 @@ namespace ImdbTest
         [Test]
         public static void RatingAMovieWithoutLoggingInIsNotPossible()
         {
-            //IWebDriver driver = new ChromeDriver();
-            //driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            //driver.Manage().Window.Maximize();
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
 
             string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "8 mile", "anastasia", "django unchained" };
             Random random = new Random();
@@ -280,12 +270,6 @@ namespace ImdbTest
 
             Assert.AreEqual(expectedResult, actualResult);
 
-            //driver.Quit();
-        }
-
-        [TearDown]
-        public void Quit()
-        {
             driver.Quit();
         }
     }
