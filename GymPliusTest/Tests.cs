@@ -12,12 +12,25 @@ namespace ImdbTest
     public class Tests
     {
         public static IWebDriver driver;
+
+        [SetUp]
+        public void SetUp()
+        {
+            driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
+        }
+        [TearDown]
+        public void TearDown()
+        {
+            driver.Quit();
+        }
         [Test]
         public static void BornToday()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
+            //IWebDriver driver = new ChromeDriver();
+            //driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            //driver.Manage().Window.Maximize();
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             By untilPageIsMaximized = By.XPath("//*[@id='iconContext-menu']");
@@ -55,7 +68,7 @@ namespace ImdbTest
             string actualResult = bornTodayPageHeader.Text;
             Assert.AreEqual(expectedResult, actualResult);
 
-            driver.Quit();
+           // driver.Quit();
         }
 
         [Test]
