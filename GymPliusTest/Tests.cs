@@ -28,10 +28,6 @@ namespace ImdbTest
         [Test]
         public static void BornToday()
         {
-            //IWebDriver driver = new ChromeDriver();
-            //driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            //driver.Manage().Window.Maximize();
-
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             By untilPageIsMaximized = By.XPath("//*[@id='iconContext-menu']");
             IWebElement ClickBurgerMenu = wait.Until(ExpectedConditions.ElementIsVisible(untilPageIsMaximized));
@@ -67,17 +63,11 @@ namespace ImdbTest
             IWebElement bornTodayPageHeader = driver.FindElement(By.XPath("//*[@id='main']/div/h1"));
             string actualResult = bornTodayPageHeader.Text;
             Assert.AreEqual(expectedResult, actualResult);
-
-           // driver.Quit();
         }
 
         [Test]
         public static void ImdbTop250Movies()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
-
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             By untilPageIsMaximized = By.XPath("//*[@id='iconContext-menu']");
             IWebElement ClickBurgerMenu = wait.Until(ExpectedConditions.ElementIsVisible(untilPageIsMaximized));
@@ -119,16 +109,10 @@ namespace ImdbTest
 
             string actualResult = firstMovieAfterClickingSortByReleaseDate.Text;
             Assert.AreEqual(expectedResult, actualResult);
-
-            driver.Quit();
         }
         [Test]
         public static void EnteringValidInformationInCreatingAccountFieldGetsYouToNextStep()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
-
             IWebElement ClickSignIn = driver.FindElement(By.XPath("//*[@id='imdbHeader']/div[2]/div[5]/a/span"));
             ClickSignIn.Click();
 
@@ -154,17 +138,11 @@ namespace ImdbTest
             string expectedResult = ("Authentication required");
             string actualResult = driver.Title;
             Assert.AreEqual(expectedResult, actualResult);
-
-            driver.Quit();
         }
 
         [Test]
         public static void SearchBarIsFunctioning()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
-
             string[] words = { "inception", "tom cruise", "leonardo di caprio", "interstellar", "the boys", "now you see me", "john wick 4", "keanu reeves", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
@@ -181,15 +159,10 @@ namespace ImdbTest
             IWebElement searchAnswer = driver.FindElement(By.XPath("//*[@id='__next']/main/div[2]/div[3]/section/div/div[1]/section[1]/h1"));
             string actualResult = searchAnswer.Text;
             Assert.AreEqual(expectedResult, actualResult);
-            driver.Quit();
         }
         [Test]
         public void LinkActivityGetToQuotes()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
-
             string[] words = { "inception", "eurotrip", "borat", "interstellar", "the boys", "now you see me", "john wick 4", "anastasia", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
@@ -219,16 +192,11 @@ namespace ImdbTest
             IWebElement movieQuotes = driver.FindElement(By.XPath("//*[@id='main']/section/div[1]/div/h1"));
             string actualResult = movieQuotes.Text;
             Assert.AreEqual(expectedResult, actualResult);
-            driver.Quit();
         }
 
         [Test]
         public static void RatingAMovieWithoutLoggingInIsNotPossible()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
-
             string[] words = { "inception", "eurotrip", "borat", "interstellar", "the boys", "now you see me", "8 mile", "anastasia", "django unchained" };
             Random random = new Random();
             int randomIndex = random.Next(0, words.Length);
@@ -256,8 +224,6 @@ namespace ImdbTest
             string actualResult = driver.Title; 
 
             Assert.AreEqual(expectedResult, actualResult);
-
-            driver.Quit();
         }
     }
 }
