@@ -233,48 +233,16 @@ namespace ImdbTest
             ClickFirstLink.Click();
 
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(7));
-            //By untilYourRatingIsClickable = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
-            //IWebElement ClickRateButton = wait.Until(ExpectedConditions.ElementIsVisible(untilYourRatingIsClickable));
-            //ClickRateButton.Click();
-
             By RatingStarsLocator = By.XPath("//*[@id='iconContext-star-border']");
             IWebElement RatingStars = wait.Until(ExpectedConditions.ElementIsVisible(RatingStarsLocator));
-            //*[@id="iconContext-star-border"]
             RatingStars.Click();
 
-
-            //IList<IWebElement> StarElements = RatingStars.FindElements(By.TagName("button"));
-
-            //foreach (IWebElement star in StarElements)
-            //{
-            //    star.Click();
-            //    Thread.Sleep(3000); 
-            //}
-
-
-            //WebDriverWait wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            //By UntilPageIsLoaded = By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[5]");
-            //IWebElement ClickStarButton = wait.Until(ExpectedConditions.ElementIsVisible(UntilPageIsLoaded));
-            //ClickStarButton.Click();
-
-            
-            // By UntilThisPageIsLoaded = By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[8]");
-            //  IWebElement ClickRatingStar = wait.Until(ExpectedConditions.ElementIsVisible(UntilThisPageIsLoaded));
             IWebElement ClickRatingStar = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/div/div[2]/button[8]"));
             Actions action = new Actions(driver);
             action.DoubleClick(ClickRatingStar).Perform();
-            //ClickRatingStar.Click();
-            //body/div[6]/div[2]/div[1]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]
-            // html / body / div[4] / div[2] / div / div[2] / div / div[2] / div[2] / div / div[2] / button[1]
-
-            //By RateButtonLocator = By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div");
-            //IWebElement untilRateButtonIsClicable = wait.Until(ExpectedConditions.ElementIsVisible(RateButtonLocator));
-            //untilRateButtonIsClicable.Click();
-            // ClickRateButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div"));
 
             IWebElement ClickRateButton = driver.FindElement(By.XPath("/html/body/div[4]/div[2]/div/div[2]/div/div[2]/div[2]/button/span"));
             ClickRateButton.Click();
-            // html / body / div[4] / div[2] / div / div[2] / div / div[2] / div[2] / button / span
 
             string expectedResult = "Sign in with IMDb - IMDb";
             string actualResult = driver.Title; 
