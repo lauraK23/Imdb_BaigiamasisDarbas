@@ -12,13 +12,13 @@ namespace ImdbTest
     {
         public static IWebDriver driver;
 
-        //[SetUp]
-        //public void SetUp()
-        //{
-        //    IWebDriver driver = new ChromeDriver();
-        //    driver.Url = "https://www.imdb.com/?ref_=nv_home";
-        //    //driver.Manage().Window.Maximize();
-        //}
+        [SetUp]
+        public void SetUp()
+        {
+            IWebDriver driver = new ChromeDriver();
+            driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            driver.Manage().Window.Maximize();
+        }
 
         [Test]
 
@@ -225,9 +225,9 @@ namespace ImdbTest
         [Test]
         public static void RatingAMovieWithoutLoggingInIsNotPossible()
         {
-            IWebDriver driver = new ChromeDriver();
-            driver.Url = "https://www.imdb.com/?ref_=nv_home";
-            driver.Manage().Window.Maximize();
+            //IWebDriver driver = new ChromeDriver();
+            //driver.Url = "https://www.imdb.com/?ref_=nv_home";
+            //driver.Manage().Window.Maximize();
 
             string[] words = { "inception", "eurotrip", "borat", "interstelar", "the boys", "now you see me", "8 mile", "anastasia", "django unchained" };
             Random random = new Random();
@@ -275,13 +275,18 @@ namespace ImdbTest
             IWebElement ClickRateButton = driver.FindElement(By.XPath("//*[@id='__next']/main/div/section[1]/section/div[3]/section/section/div[2]/div[2]/div/div[2]/button/span/div"));
             ClickRateButton.Click();
 
-            driver.Quit();
+            string expectedResult = "Sign in with IMDb - IMDb";
+            string actualResult = driver.Title; 
+
+            Assert.AreEqual(expectedResult, actualResult);
+
+            //driver.Quit();
         }
 
-        //[TearDown]
-        //public void Quit()
-        //{
-        //    driver.Quit();
-        //}
+        [TearDown]
+        public void Quit()
+        {
+            driver.Quit();
+        }
     }
 }
